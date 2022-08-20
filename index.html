@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>rahmat saghafi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/master.css">
+    <link rel="stylesheet" href="css/local.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <main class="container cont-body">
+        <section class="col-lg-6 col-md-10 col-11 col-xl-4 player-body">
+            <div class="player-header">
+                <figure class="figure-header">
+                    <img id="images" src="audio/img-cover/Aaron-smith.jpg" alt="">
+                    <figcaption id="title-music">Dancin</figcaption>
+                    <h3 id="name-music">Aaron Smith</h3>
+                </figure>
+                <div class="blue-bar">
+                    <p id="number-end">4:16</p>
+                    <div class="navbar-blue">
+                        <div id="load-time"></div>
+                    </div>
+                    <audio id="audio_src" src="audio/Aaron-smith.mp3">
+                    </audio>
+                </div>
+                <div class="icon-header">
+                    <i onclick="_clickB()" class="bi bi-skip-backward-fill"></i>
+                    <i data-val="off" class="bi bi-play-fill"></i>
+                    <!-- <i class="bi bi-pause"></i> -->
+                    <i onclick="_clickN()" class="bi bi-skip-forward-fill"></i>
+                </div>
+            </div>
+            <div id="append-child" class="player-min"></div>
+        </section>
+    </main>
+</body>
+<script>
+    let _imgcover, _titlemusic, _namemusic, _pause, _nexS, _backS, _src, _numberendS
+    _imgcover = document.getElementById('images')
+    _titlemusic = document.getElementById('title-music')
+    _namemusic = document.getElementById('name-music')
+    _backS = document.getElementsByClassName('bi-skip-backward-fill')[0]
+    _pause = document.getElementsByClassName('bi-play-fill')[0]
+    _nexS = document.getElementsByClassName('bi-skip-forward-fill')[0]
+    _numberendS = document.getElementById('number-end')
+    _src = document.getElementById('audio_src')
+        // audio
+    const _audio = [{
+            name: 'Aaron Smith',
+            nsoung: 'Dancin',
+            numbertime: '4:16',
+            bgCover: 'audio/img-cover/Aaron-smith.jpg',
+            src: 'audio/Aaron-smith.mp3'
+        }, {
+            name: 'Billie Eilish',
+            nsoung: 'Bad Guy',
+            numbertime: '3:26',
+            bgCover: 'audio/img-cover/Billie-Eilish-Bad-Guy.jpg',
+            src: 'audio/Billie-Eilish-Bad-Guy.mp3'
+        }, {
+            name: 'Duke Dumont',
+            nsoung: 'Ocean Drive',
+            numbertime: '3:17',
+            bgCover: 'audio/img-cover/Duke-Dumont.jpg',
+            src: 'audio/Duke-Dumont.mp3'
+        }, {
+            name: 'bob marley',
+            nsoung: 'Is This Love',
+            numbertime: '3:26',
+            bgCover: 'audio/img-cover/Is-This-Love(remix).jpg',
+            src: 'audio/Is-This-Love(remix).mp3'
+        }]
+        // load time bar blue music
+    let _with_bar = document.getElementById('load-time').clientWidth
+        // load time bar blue music
+
+
+
+    k = 0
+    if (k == 0) {
+        _backS.style.opacity = ".4";
+        _backS.style.cursor = "revert";
+    } else {
+        _backS.style.opacity = "1";
+        _backS.style.cursor = "pointer";
+    }
+
+
+    function _clickN() {
+        if (k >= 0) {
+            _backS.style.opacity = "1";
+            _backS.style.cursor = "pointer";
+        } else {
+            _backS.style.opacity = ".4";
+            _backS.style.cursor = "revert";
+        }
+        if (k == (_audio.length) - 1) {
+            _nexS.style.opacity = ".4";
+            _nexS.style.cursor = "revert";
+        } else {
+            _nexS.style.opacity = "1";
+            _nexS.style.cursor = "pointer";
+            k++
+            _click()
+        }
+    }
+
+    function _clickB() {
+        if (k == 0) {
+            _backS.style.opacity = ".4";
+            _backS.style.cursor = "revert";
+        } else if (k <= (_audio.length) - 1) {
+            _backS.style.opacity = "1";
+            _backS.style.cursor = "pointer";
+            _nexS.style.opacity = "1";
+            _nexS.style.cursor = "pointer";
+            k--
+            _click()
+        }
+    }
+    // next music
+
+    let _append_ = document.getElementById('append-child')
+
+    function _click() {
+        _namemusic.innerText = _audio[k].name
+        _titlemusic.innerText = _audio[k].nsoung
+        let _time_balance = _audio[k].numbertime
+        _numberendS.innerText = _audio[k].numbertime
+        let _stringSrcMusic = _audio[k].src.toString(0, 1000)
+        _src.setAttribute('src', _stringSrcMusic)
+        let _stringSrcCover = _audio[k].bgCover.toString(0, 1000)
+        _imgcover.setAttribute('src', _stringSrcCover)
+        if (_pause.getAttribute('data-val') == 'on') {
+            _pause.setAttribute('data-val', 'off')
+            _pause.classList.add('bi-play-fill')
+            _pause.classList.remove('bi-pause')
+        }
+
+        // test
+        console.log(_time_balance + _with_bar)
+
+    }
+
+
+
+    // ply ands pase music
+    _pause.addEventListener('click', () => {
+        if (_pause.getAttribute('data-val') == 'off') {
+            _pause.setAttribute('data-val', 'on')
+            _pause.classList.add('bi-pause')
+            _pause.classList.remove('bi-play-fill')
+            _src.play()
+        } else if (_pause.getAttribute('data-val') == 'on') {
+            _pause.setAttribute('data-val', 'off')
+            _pause.classList.add('bi-play-fill')
+            _pause.classList.remove('bi-pause')
+            _src.pause()
+        }
+    })
+
+
+
+
+
+
+
+
+
+
+    num = 0
+        // Document createElement()
+
+    for (i = 0; i <= _audio.length; i++) {
+
+        let _div = document.createElement('div')
+        _div.innerHTML = `
+            <div class="col-12 ply-list">
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col-4">
+                            <img class="img-ply-list" src="${_audio[i].bgCover.toString(0, 10)}" alt="cover music">
+                        </div>
+                        <div class="col-6 title-ply-list">
+                            <p>${_audio[i].nsoung}</p>
+                            <p>${_audio[i].name}</p>
+                        </div>
+                        <div class="col-2 timer-ply-list">
+                            <p>${_audio[i].numbertime}</p>
+                        </div>
+                    </div>
+                </div>
+            `
+        _append_.appendChild(_div)
+        let _selected = document.getElementsByClassName('col-12 ply-list')[i]
+        console.log(_selected)
+        if (_selected.length == 1) {
+            _selected.classList.add('bacg-acctiv')
+        } else {
+            _selected.classList.remove('bacg-acctiv')
+        }
+
+
+
+    }
+    // if (i == _audio[i]) {
+    //     __selected = classList.add('bacg-acctiv')
+    // }
+    // console.log(_selected)
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+</script>
+
+</html>
